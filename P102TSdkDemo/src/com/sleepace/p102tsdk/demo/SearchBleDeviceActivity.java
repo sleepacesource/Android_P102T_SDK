@@ -127,18 +127,20 @@ public class SearchBleDeviceActivity extends BaseActivity {
         	
         	showLoading();
         	
-        	//设置mtu大小,一定要放在登录前,mtu >= 20 && mtu <= 509, 实际mtu大小由芯片决定
-        	deviceHelper.setMTU(500, new IResultCallback<Integer>() {
-    			@Override
-    			public void onResultCallback(CallbackData<Integer> cd) {
-    				// TODO Auto-generated method stub
-    				SdkLog.log(TAG+" setMtu cd:" + cd);
-    				if(cd.isSuccess()) {
-    					//这里是设置成功后，设备的实际mtu大小,如果程序中需要自定义构造数据包，则一包数据的长度不超过mtu大小
-    					int mtu = cd.getResult();
-    				}
-    			}
-    		});
+        	if(device.getDeviceType() != DeviceType.DEVICE_TYPE_P103T) {
+        		//设置mtu大小,一定要放在登录前,mtu >= 20 && mtu <= 509, 实际mtu大小由芯片决定
+        		deviceHelper.setMTU(500, new IResultCallback<Integer>() {
+        			@Override
+        			public void onResultCallback(CallbackData<Integer> cd) {
+        				// TODO Auto-generated method stub
+        				SdkLog.log(TAG+" setMtu cd:" + cd);
+        				if(cd.isSuccess()) {
+        					//这里是设置成功后，设备的实际mtu大小,如果程序中需要自定义构造数据包，则一包数据的长度不超过mtu大小
+        					int mtu = cd.getResult();
+        				}
+        			}
+        		});
+        	}
         	
     		deviceHelper.login(device.getDeviceName(), device.getAddress(), device.getDeviceType(), userId, 10 * 1000, new IResultCallback<LoginBean>() {
 				@Override
@@ -263,16 +265,20 @@ public class SearchBleDeviceActivity extends BaseActivity {
 		            		deviceName = deviceName.substring(0, 13);
 		            	}
 		            }
-//		            SdkLog.log(TAG+" onLeScan deviceName:" + deviceName);
+		            SdkLog.log(TAG+" onLeScan deviceName:" + deviceName);
 		            //deviceName  = modelName;
 		            
-		            if(/*!TextUtils.isEmpty(modelName) &&*/ checkP102T(deviceName)){
+		            if(/*!TextUtils.isEmpty(modelName) &&*/ checkP102T(deviceName) || checkP103T(deviceName)){
 		            	BleDevice ble = new BleDevice();
 		            	ble.setModelName(modelName);
 		            	ble.setAddress(device.getAddress());
 		            	ble.setDeviceName(deviceName);
 		            	ble.setDeviceId(deviceName);
-		            	ble.setDeviceType(DeviceType.DEVICE_TYPE_P102T);
+		            	if(checkP102T(deviceName)) {
+		            		ble.setDeviceType(DeviceType.DEVICE_TYPE_P102T);
+		            	}else {
+		            		ble.setDeviceType(DeviceType.DEVICE_TYPE_P103T);
+		            	}
 		            	adapter.addBleDevice(ble);
 		            }
 				}
@@ -287,6 +293,13 @@ public class SearchBleDeviceActivity extends BaseActivity {
 		Matcher m1 = p1.matcher(deviceName);
 		return m1.matches();
 	}
+    
+    private boolean checkP103T(String deviceName) {
+    	if (deviceName == null) return false;
+    	Pattern p1 = Pattern.compile("^(P13T)[0-9a-zA-Z]{9}$");
+    	Matcher m1 = p1.matcher(deviceName);
+    	return m1.matches();
+    }
 
     class BleAdapter extends BaseAdapter {
         private List<BleDevice> list = new ArrayList<BleDevice>();

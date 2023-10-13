@@ -4,7 +4,6 @@ import com.sleepace.p102tsdk.demo.util.CrashHandler;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.app.Application;
-import android.os.Environment;
 
 
 public class DemoApp extends Application {
@@ -22,6 +21,7 @@ public class DemoApp extends Application {
         super.onCreate();
         instance = this;
         CrashHandler.getInstance().init(this);
+        SdkLog.init(this);
         SdkLog.setLogEnable(true);
         String logDir = getExternalFilesDir("log").getPath();
         SdkLog.setLogDir(logDir);

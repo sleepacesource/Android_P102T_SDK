@@ -3,6 +3,7 @@ package com.sleepace.p102tsdk.demo.fragment;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import com.sleepace.p102tsdk.demo.MainActivity;
@@ -23,6 +24,7 @@ import com.sleepace.sdk.manager.CONNECTION_STATE;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.DeviceType;
 import com.sleepace.sdk.util.SdkLog;
+import com.sleepace.sdk.util.StringUtil;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -187,8 +189,9 @@ public class DataFragment extends BaseFragment {
 					if(cd.isSuccess()) {
 						CollectStatus collectStatus = cd.getResult();
 						int curTime = (int) (System.currentTimeMillis() / 1000);
+						SdkLog.log(TAG+" queryCollectStatus curTime:" + StringUtil.DATE_FORMAT.format(new Date(curTime*1000l))+",collectStatus:" + collectStatus);
 						//采集时间小时10分钟
-						if(collectStatus.getTimestamp() == 0 || curTime - collectStatus.getTimestamp() < 10 * 60) {
+						if(false && (collectStatus.getTimestamp() == 0 || curTime - collectStatus.getTimestamp() < 10 * 60)) {
 							mActivity.runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
@@ -241,12 +244,12 @@ public class DataFragment extends BaseFragment {
 									
 									Calendar cal = Calendar.getInstance();
 									int endTime = (int) (cal.getTimeInMillis() / 1000);
-									cal.add(Calendar.DATE, -1);
-									cal.set(Calendar.HOUR_OF_DAY, 20);
+									cal.add(Calendar.DATE, -30);
+									cal.set(Calendar.HOUR_OF_DAY, 0);
 									cal.set(Calendar.MINUTE, 0);
 									cal.set(Calendar.SECOND, 0);
 									int startTime = (int) (cal.getTimeInMillis() / 1000);
-									getDeviceHelper().historyDownload(0, endTime, 1, new IResultCallback<List<HistoryData>>() {
+									getDeviceHelper().historyDownload(startTime, endTime, 1, new IResultCallback<List<HistoryData>>() {
 										@Override
 										public void onResultCallback(final CallbackData<List<HistoryData>> cd) {
 											// TODO Auto-generated method stub
