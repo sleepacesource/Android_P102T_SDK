@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sleepace.p102tsdk.demo.fragment.DataFragment;
-import com.sleepace.p102tsdk.demo.fragment.ReportFragment;
 import com.sleepace.p102tsdk.demo.fragment.DeviceFragment;
-import com.sleepace.sdk.baseautopillow.domain.HistoryData;
+import com.sleepace.p102tsdk.demo.fragment.ReportFragment;
 import com.sleepace.sdk.domain.BleDevice;
 import com.sleepace.sdk.interfs.IConnectionStateCallback;
 import com.sleepace.sdk.interfs.IDeviceManager;
 import com.sleepace.sdk.manager.CONNECTION_STATE;
 import com.sleepace.sdk.p102t.P102THelper;
+import com.sleepace.sdk.p102t.domain.HistoryData;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.Manifest;

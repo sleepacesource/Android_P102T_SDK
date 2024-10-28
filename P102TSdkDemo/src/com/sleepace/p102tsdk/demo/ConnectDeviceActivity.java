@@ -1,12 +1,12 @@
 package com.sleepace.p102tsdk.demo;
 
-import com.sleepace.sdk.baseautopillow.domain.LoginBean;
 import com.sleepace.sdk.constant.DeviceCode;
 import com.sleepace.sdk.domain.BleDevice;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.DeviceType;
 import com.sleepace.sdk.p102t.P102THelper;
+import com.sleepace.sdk.p102t.domain.LoginBean;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

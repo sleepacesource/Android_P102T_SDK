@@ -2,7 +2,7 @@ package com.sleepace.p102tsdk.demo.util;
 
 import java.util.Comparator;
 
-import com.sleepace.sdk.baseautopillow.domain.HistoryData;
+import com.sleepace.sdk.p102t.domain.HistoryData;
 
 public class HistoryDataComparator implements Comparator<HistoryData> {
 

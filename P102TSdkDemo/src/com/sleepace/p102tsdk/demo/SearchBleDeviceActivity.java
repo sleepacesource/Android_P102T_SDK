@@ -6,13 +6,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.sleepace.p102tsdk.demo.util.BleDeviceNameUtil;
-import com.sleepace.sdk.baseautopillow.domain.LoginBean;
 import com.sleepace.sdk.domain.BleDevice;
 import com.sleepace.sdk.interfs.IResultCallback;
 import com.sleepace.sdk.manager.CallbackData;
 import com.sleepace.sdk.manager.DeviceType;
 import com.sleepace.sdk.manager.ble.BleHelper;
 import com.sleepace.sdk.p102t.P102THelper;
+import com.sleepace.sdk.p102t.domain.LoginBean;
 import com.sleepace.sdk.util.SdkLog;
 
 import android.bluetooth.BluetoothAdapter;
